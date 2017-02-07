@@ -1,0 +1,38 @@
+---
+- name: Common setup
+    hosts: allnodes
+    gather_facts: True
+
+    tasks:
+      - name: Update apt cache
+        apt:
+          update_cache: yes
+
+      - name: Install NFS packages
+        apt-get:
+          state: present
+          name: {{ item }}
+        with_items:
+          - nfs-kernel-server
+          - nfs-common
+          - portmap
+          - autofs
+
+      - name: Install MPI packages
+        apt-get:
+          state: present
+          name: {{ item }}
+        with_items:
+          - python-mpi4py
+          - python-mpi4py-doc
+
+
+- name: Master node setup
+    hosts: master
+
+
+
+- name: FPGA node setup
+    hosts: fpga
+
+

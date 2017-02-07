@@ -37,6 +37,28 @@ Each Raspberry Pi is setup with the lastest Raspbian (Jessie) Image with the fol
 * GPU memory set to 128Mb (planning on trying to run GPU-acclerated computations at some point
 * File system expanded to full card
 * Each node has a DNS name which is resolved by my local DNS server
+* Copied an SSH public key to each node
+* Set the password on each node to be the same (bad security I know)
 
 
+### Installing ansible
+
+Since Ansible has been packaged for use with pip I've used virtualenv for python to allow a local installation that doesn't need admin access or muck up any of your system libraries.  I prefer this approach as it's cleaner and has less in the way of side-affects.  Feel free to install ansible from RPMs/.deb or other package managers onto your system natively if that is easier for you.
+
+Create a virtual python environment and activate it
+
+```
+virtualenv ansible-env
+. ansible-env/bin/activate
+```
+
+Install ansible
+
+```
+# Need to install/build OpenSSL first 
+LDFLAGS="-L/usr/local/lib" pip install cryptography --no-use-wheel
+pip install ansible
+pip install passlib
+pip install boto 
+```
 
