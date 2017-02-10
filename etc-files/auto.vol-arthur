@@ -1,0 +1,3 @@
+sdcard  -fstype=auto  UUID=db64d741-e970-46f6-96a4-18ff15a304b2
+hdrive  -fstype=auto  UUID=ba9fc3dd-4d4f-44ff-8803-4f0b07dd94a4
+

@@ -2,6 +2,7 @@
 - name: Common setup
     hosts: allnodes
     gather_facts: True
+    user: root
 
     tasks:
       - name: Update apt cache
@@ -26,9 +27,28 @@
           - python-mpi4py
           - python-mpi4py-doc
 
+      - name: Make the /data directory
+        file:
+          path: /data
+          mode: 0777
+          state: directory
+
+      - name: Make the /net directory
+        file:
+          path: /net
+          mode: 0777
+          state: directory
+
+      - name: Make the /etc/auto.master.d directory
+        file:
+          path: /etc/auto.master.d
+          mode: 0744
+          state: directory
+
 
 - name: Master node setup
     hosts: master
+
 
 
 

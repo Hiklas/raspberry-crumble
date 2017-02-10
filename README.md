@@ -62,3 +62,14 @@ pip install passlib
 pip install boto 
 ```
 
+
+
+## Meraki Notes
+
+### Setup
+
+
+
+### Documentation
+
+Firewall [ports](https://documentation.meraki.com/zGeneral_Administration/Other_Topics/Firewall_Rules_for_Cloud_Connectivity)
