@@ -58,10 +58,22 @@ Install ansible
 # Need to install/build OpenSSL first 
 LDFLAGS="-L/usr/local/lib" pip install cryptography --no-use-wheel
 pip install ansible
-pip install passlib
-pip install boto 
 ```
 
+
+### Running ansible
+
+To build the entire cluster run the following command
+
+```
+ansible-playbook -i inventory/hosts --ask-become-pass build_cluster.yml
+```
+
+To just run part of the build use the tags, for example
+
+```
+ansible-playbook -i inventory/hosts -t master --ask-become-pass build_cluster.yml
+```
 
 
 ## Meraki Notes

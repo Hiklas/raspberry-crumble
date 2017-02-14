@@ -92,3 +92,11 @@ ENV/
 *.iml
 .idea
 
+# Directories
+ansible-env
+ansible-fact-cache
+
+# Retry
+*.retry
+
+

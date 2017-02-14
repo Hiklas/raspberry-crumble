@@ -1,107 +1,109 @@
 ---
 - name: Common setup
-    hosts: allnodes
-    gather_facts: True
-    user: root
-    become: True
+  hosts: allnodes
+  gather_facts: True
+  user: pi
+  become: True
 
-    tasks:
-      - name: Update apt cache
-        apt:
-          update_cache: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
 
-      - name: Install NFS packages
-        apt-get:
-          state: present
-          name: {{ item }}
-        with_items:
-          - nfs-kernel-server
-          - nfs-common
-          - portmap
-          - autofs
+    - name: Install NFS packages
+      apt:
+        state: present
+        name: "{{ item }}"
+      with_items:
+        - nfs-kernel-server
+        - nfs-common
+        - portmap
+        - autofs
 
-      - name: Install MPI packages
-        apt-get:
-          state: present
-          name: {{ item }}
-        with_items:
-          - python-mpi4py
-          - python-mpi4py-doc
+    - name: Install MPI packages
+      apt:
+        state: present
+        name: "{{ item }}"
+      with_items:
+        - python-mpi4py
+        - python-mpi4py-doc
 
-      - name: Make the /data directory
-        file:
-          path: /data
-          mode: 0777
-          state: directory
+    - name: Make the /data directory
+      file:
+        path: /data
+        mode: 0777
+        state: directory
 
-      - name: Make the /net directory
-        file:
-          path: /net
-          mode: 0777
-          state: directory
+    - name: Make the /net directory
+      file:
+        path: /net
+        mode: 0777
+        state: directory
 
-      - name: Make the /etc/auto.master.d directory
-        file:
-          path: /etc/auto.master.d
-          mode: 0744
-          state: directory
+    - name: Make the /etc/auto.master.d directory
+      file:
+        path: /etc/auto.master.d
+        mode: 0744
+        state: directory
 
-      - name: Copy net autofs to config
-        copy:
-          src: etc-files/auto.master.d/net.autofs
-          dest: /etc/auto.master.d/net.autofs
-          mode: 0744
+    - name: Copy net autofs to config
+      copy:
+        src: etc-files/auto.master.d/net.autofs
+        dest: /etc/auto.master.d/net.autofs
+        mode: 0744
 
-      - name: Copy net autofs to config
-        copy:
-          src: etc-files/auto.master.d/net.autofs
-          dest: /etc/auto.master.d/net.autofs
-          mode: 0744
+    - name: Copy net autofs to config
+      copy:
+        src: etc-files/auto.master.d/net.autofs
+        dest: /etc/auto.master.d/net.autofs
+        mode: 0744
 
-      - name: Copy exports file for non-master nodes
-        copy:
-          src: etc-files/exports-cluster
-          dest: /etc/exports
-          mode: 0744
-        when: "'master' not in group_names"
+    - name: Copy exports file for non-master nodes
+      copy:
+        src: etc-files/exports-cluster
+        dest: /etc/exports
+        mode: 0744
+      when: "'master' not in group_names"
 
 
 - name: Master node setup
-    hosts: master
-    user: root
-    become: True
+  hosts: master
+  user: pi
+  become: True
+  tags: master
 
-    tasks:
-      - name: Copy master vol.autofs to config
-        copy:
-          src: etc-files/master.d/vol.autofs-master
-          dest: /etc/auto.master.d/vol.autofs
-          mode: 0744
+  tasks:
+    - name: Copy master vol.autofs to config
+      copy:
+        src: etc-files/auto.master.d/vol.autofs-master
+        dest: /etc/auto.master.d/vol.autofs
+        mode: 0744
 
-      - name: Copy master auto.vol to config
-        copy:
-          src: etc-files/auto.vol-master
-          dest: /etc/auto.vol
-          mode: 0744
+    - name: Copy master auto.vol to config
+      copy:
+        src: etc-files/auto.vol-master
+        dest: /etc/auto.vol
+        mode: 0744
 
-      - name: Copy master exports file
-        copy:
-          src: etc-files/exports-master
-          dest: /etc/exports
-          mode: 0744
-        when: "'master' not in group_names"
-
+    - name: Copy master exports file
+      copy:
+        src: etc-files/exports-master
+        dest: /etc/exports
+        mode: 0744
 
 
 
 - name: FPGA node setup
-    hosts: fpga
-    user: root
-    become: True
-
+  hosts: fpga
+  user: pi
+  become: True
+  tags: fpga
 
 
 - name: Start processes
-    hosts: allnodes
-    user: root
-    become: True
+  hosts: allnodes
+  user: pi
+  become: True
+  tags: startup
+
+
