@@ -4,11 +4,13 @@
   gather_facts: True
   user: pi
   become: True
+  tags: common
 
   tasks:
     - name: Update apt cache
       apt:
         update_cache: yes
+        upgrade: yes
 
     - name: Install NFS packages
       apt:
@@ -27,6 +29,8 @@
       with_items:
         - python-mpi4py
         - python-mpi4py-doc
+        - mpich
+        - mpich-doc
 
     - name: Make the /data directory
       file:
@@ -65,6 +69,23 @@
         mode: 0744
       when: "'master' not in group_names"
 
+    - name: Create cluster group
+      group:
+        name: cluster
+        gid: 2001
+        state: present
+
+    - name: Create cluster user
+      user:
+        name: cluster
+        uid: 2001
+        group: cluster
+        comment: "Cluster User"
+        generate_ssh_key: yes
+        home: /home/cluster
+        createhome: yes
+        state: present
+        shell: /bin/bash
 
 - name: Master node setup
   hosts: master
@@ -91,6 +112,8 @@
         dest: /etc/exports
         mode: 0744
 
+    -
+
 
 
 - name: FPGA node setup
@@ -98,6 +121,9 @@
   user: pi
   become: True
   tags: fpga
+
+
+
 
 
 - name: Start processes

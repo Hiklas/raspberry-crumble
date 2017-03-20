@@ -40,6 +40,27 @@ Each Raspberry Pi is setup with the lastest Raspbian (Jessie) Image with the fol
 * Copied an SSH public key to each node
 * Set the password on each node to be the same (bad security I know)
 
+### Network Setup
+
+***TODO***
+
+Currently I've used static IP addresses with each node.  This has proved to be somewhat annoying as 
+the Raspberry Pi is setup to default to DHCP and also makes use of [resolveconf]() 
+which generates a resolv.conf file overwritting anything that is entered for a static configuration. 
+
+According to the debian [instructions](https://wiki.debian.org/NetworkConfiguration#The_resolvconf_program)
+and further details eluded to [here](https://wiki.debian.org/NetworkConfiguration#A.2Fetc.2Fnetwork.2Finterfaces)
+the following lines in /etc/network/interfaces is enough to ensure that DNS servers will be set by resolveconf
+
+```
+dns-nameservers 1.2.3.4
+dns-search some.domain.com
+```
+
+I think for a bigger cluster or if I build/rebuild this again I'll just rely on statically-assigned
+DHCP leases and naming as mucking around with all of this is overly complicating matters :)
+
+
 
 ### Installing ansible
 
@@ -76,12 +97,33 @@ ansible-playbook -i inventory/hosts -t master --ask-become-pass build_cluster.ym
 ```
 
 
-## Meraki Notes
+## Documentation
 
-### Setup
-
-
-
-### Documentation
+### Meraki
 
 Firewall [ports](https://documentation.meraki.com/zGeneral_Administration/Other_Topics/Firewall_Rules_for_Cloud_Connectivity)
+
+
+### Ansible
+
+Managing [apt with ansible](http://docs.ansible.com/ansible/apt_module.html)
+
+Managing [user creation with ansible](http://docs.ansible.com/ansible/user_module.html) and creating
+[groups](http://docs.ansible.com/ansible/group_module.html)
+
+Managing [SSH keys with ansible](http://blog.appliedinformaticsinc.com/how-to-manage-ssh-keys-using-ansible/)
+
+Fetching [remote files](http://docs.ansible.com/ansible/fetch_module.html)
+
+
+### MPICH
+
+Installing [MPICH on Debian](http://www.cslu.ogi.edu/~zak/debianclusters/Installing_MPICH)
+
+
+### Raspbian
+
+Cleaning up ["untrusted versions of the following ..."](http://serverfault.com/questions/444798/debian-warning-untrusted-versions-of-the-following-packages-will-be-installe)
+error from Debian when trying to upgrade.
+
+
