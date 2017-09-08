@@ -84,6 +84,12 @@ pip install ansible
 
 ### Running ansible
 
+To initialise brand new raspberry pi devices (from a clean Raspbian Image)
+
+```
+ansible-playbook -i inventory/hosts --extra-vars "pi_password=<password>" initialise_pi_hosts.yml
+```
+
 To build the entire cluster run the following command
 
 ```
@@ -126,4 +132,8 @@ Installing [MPICH on Debian](http://www.cslu.ogi.edu/~zak/debianclusters/Install
 Cleaning up ["untrusted versions of the following ..."](http://serverfault.com/questions/444798/debian-warning-untrusted-versions-of-the-following-packages-will-be-installe)
 error from Debian when trying to upgrade.
 
+
+### Running raspi-config noninteractive
+
+Found post on [this](https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=21632)
 

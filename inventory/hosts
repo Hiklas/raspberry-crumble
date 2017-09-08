@@ -1,9 +1,9 @@
 [allnodes]
 arthur
-merlin
 dieter
 heimlich
 horst
+riding
 hansel
 gretal
 
@@ -12,5 +12,6 @@ arthur
 
 
 [fpga]
-merlin
+hansel
+gretal
 

@@ -1,0 +1,3 @@
+---
+- name: Wait for raspberry pi to listen on port 22
+  wait_for: state=started host={{ ansible_default_ipv4.address }} port=22 delay=10

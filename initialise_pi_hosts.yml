@@ -1,0 +1,27 @@
+---
+- name: Prerequisites
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Check password is set
+      fail:
+      when: pi_password is not defined
+      tags: always
+
+
+- name: Common setup
+  hosts: "{{ init_hosts | default('allnodes')}}"
+  gather_facts: yes
+  user: pi
+  become: True
+  tags: initialise
+
+  roles:
+
+    - raspconfig
+    - { role: ssh_keys, ssh_user: root }
+    - { role: ssh_keys, ssh_user: root }
+    - { role: set_password, user_password: pi_password }
+    - reboot
+    - wait_for_ssh
