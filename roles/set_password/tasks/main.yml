@@ -1,12 +1,24 @@
 ---
 
-- name: Debug echo the password
+- name: Calculate encrypted password
+  raw: 'mkpasswd --method=sha-512 "{{ user_password }}"'
+  register: crypt_password_result
+
+- name: Strip EOL from crypt password
+  set_fact:
+    crypt_password: "{{ crypt_password_result.stdout_lines[0] }}"
+
+- name: Debug echo the cleartext password
   debug:
-    msg: "Password for pi user: '{{ user_password }}'"
+    msg: "Unencrypted Password for pi user: '{{ user_password }}'"
+
+- name: Debug echo the encrypted password
+  debug:
+    msg: "Encrypted Password for pi user: '{{ crypt_password }}'"
 
 - name: Change pi password
   user:
     name: pi
-    password: "{{ user_password }}"
+    password: "{{ crypt_password }}"
 
 

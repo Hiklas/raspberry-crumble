@@ -14,7 +14,7 @@
   hosts: "{{ init_hosts | default('allnodes')}}"
   gather_facts: yes
   user: pi
-  become: True
+  become: yes
   tags: initialise
 
   roles:
@@ -26,11 +26,24 @@
 
 - name: Common setup after keys added
   hosts: "{{ init_hosts | default('allnodes')}}"
-  gather_facts: yes
-  user: root
-  become: False
+  gather_facts: no
+  user: pi
+  become: yes
   tags: initialise
+
+  pre_tasks:
+
+    - name: Ensure that the password for SSH connections is now as above
+      set_fact:
+        ansible_ssh_pass: "{{ pi_password }}"
 
   roles:
     - reboot
+
+- name: Wait for the hosts to be available
+  hosts: "{{ init_hosts | default('allnodes')}}"
+  gather_facts: no
+  become: no
+
+  roles:
     - wait_for_ssh

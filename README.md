@@ -72,14 +72,11 @@ pip install ansible
 To initialise brand new raspberry pi devices (from a clean Raspbian Image)
 
 ```
-ansible-playbook -v -i inventory/hosts --extra-vars '{ "pi_password":"<encrypted password>", "init_hosts":[ "dieter", "heimlich", "horst" ]}' --ask-become-pass --ask-pass initialise_pi_hosts.yml
+ansible-playbook -v -i inventory/hosts --extra-vars '{ "pi_password":"<unencrypted password>", "init_hosts":[ "dieter", "heimlich", "horst" ]}' --ask-become-pass --ask-pass initialise_pi_hosts.yml
 ```
 
-See this [page](http://docs.ansible.com/ansible/latest/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module) 
-for details on creating encrypted passwords.
-
-If you have already run the above once and the SSH keys are already installed then you can remove the --ask-* arguments, 
-if you don't then Ansible will still attempt to connect using username/password.
+If you have already run the above once and the password step has already been executed, then you must remember to
+use the new password for subsequent attempt to run the same playbook
 
 To build the entire cluster run the following command
 
@@ -130,8 +127,6 @@ Found post on [this](https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=216
 
 ### Trying to use static addresses
 
-***TODO***
-
 Previously I've used static IP addresses for each node.  This has proved to be somewhat annoying as 
 the Raspberry Pi is setup to default to DHCP and also makes use of 
 [resolveconf](http://manpages.ubuntu.com/manpages/zesty/man8/resolvconf.8.html) 
@@ -148,3 +143,16 @@ dns-search some.domain.com
 
 I think for a bigger cluster or if I build/rebuild this again I'll just rely on statically-assigned
 DHCP leases and naming as mucking around with all of this is overly complicating matters :)
+
+
+### Need to change password
+
+Since the initial setup of the raspberry pi boards needs the pi password to be changed
+(or it gets upset since it's using the default password) need to override the password initially passed 
+into the ansible command.
+
+Found a [post about this](https://stackoverflow.com/questions/34243229/in-ansible-is-it-possible-to-define-the-authentication-method-per-playbook)
+
+The scripts are now using a method in the following link to generate the encrypted password, specifically
+the [mkpasswd command mentioned here](http://docs.ansible.com/ansible/latest/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module) 
+                      
