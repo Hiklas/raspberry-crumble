@@ -1,7 +1,4 @@
 ---
 
-- name: Enable SSH
-  raw: "raspi-config nonint do_ssh 1"
-
 - name: Set hostname
   raw: "raspi-config nonint do_hostname {{ inventory_hostname }}"

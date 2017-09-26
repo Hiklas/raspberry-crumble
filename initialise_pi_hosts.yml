@@ -10,7 +10,7 @@
       tags: always
 
 
-- name: Common setup
+- name: Common setup before keys
   hosts: "{{ init_hosts | default('allnodes')}}"
   gather_facts: yes
   user: pi
@@ -21,7 +21,16 @@
 
     - raspconfig
     - { role: ssh_keys, ssh_user: root }
-    - { role: ssh_keys, ssh_user: root }
-    - { role: set_password, user_password: pi_password }
+    - { role: ssh_keys, ssh_user: pi }
+    - { role: set_password, user_password: "{{ pi_password }}" }
+
+- name: Common setup after keys added
+  hosts: "{{ init_hosts | default('allnodes')}}"
+  gather_facts: yes
+  user: root
+  become: False
+  tags: initialise
+
+  roles:
     - reboot
     - wait_for_ssh

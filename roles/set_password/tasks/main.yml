@@ -1,0 +1,12 @@
+---
+
+- name: Debug echo the password
+  debug:
+    msg: "Password for pi user: '{{ user_password }}'"
+
+- name: Change pi password
+  user:
+    name: pi
+    password: "{{ user_password }}"
+
+

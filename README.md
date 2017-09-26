@@ -42,24 +42,9 @@ Each Raspberry Pi is setup with the lastest Raspbian (Jessie) Image with the fol
 
 ### Network Setup
 
-***TODO***
-
-Currently I've used static IP addresses with each node.  This has proved to be somewhat annoying as 
-the Raspberry Pi is setup to default to DHCP and also makes use of [resolveconf]() 
-which generates a resolv.conf file overwritting anything that is entered for a static configuration. 
-
-According to the debian [instructions](https://wiki.debian.org/NetworkConfiguration#The_resolvconf_program)
-and further details eluded to [here](https://wiki.debian.org/NetworkConfiguration#A.2Fetc.2Fnetwork.2Finterfaces)
-the following lines in /etc/network/interfaces is enough to ensure that DNS servers will be set by resolveconf
-
-```
-dns-nameservers 1.2.3.4
-dns-search some.domain.com
-```
-
-I think for a bigger cluster or if I build/rebuild this again I'll just rely on statically-assigned
-DHCP leases and naming as mucking around with all of this is overly complicating matters :)
-
+As per the notes below, using static addresses and DNS configuration across the cluster 
+is incredibly complicated and ends up fighting against resolvconf.  Instead, the cluster relies on 
+a router with DNS/DHCP that has reservations statically assigned.   
 
 
 ### Installing ansible
@@ -87,8 +72,14 @@ pip install ansible
 To initialise brand new raspberry pi devices (from a clean Raspbian Image)
 
 ```
-ansible-playbook -i inventory/hosts --extra-vars "pi_password=<password>" initialise_pi_hosts.yml
+ansible-playbook -v -i inventory/hosts --extra-vars '{ "pi_password":"<encrypted password>", "init_hosts":[ "dieter", "heimlich", "horst" ]}' --ask-become-pass --ask-pass initialise_pi_hosts.yml
 ```
+
+See this [page](http://docs.ansible.com/ansible/latest/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module) 
+for details on creating encrypted passwords.
+
+If you have already run the above once and the SSH keys are already installed then you can remove the --ask-* arguments, 
+if you don't then Ansible will still attempt to connect using username/password.
 
 To build the entire cluster run the following command
 
@@ -137,3 +128,23 @@ error from Debian when trying to upgrade.
 
 Found post on [this](https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=21632)
 
+### Trying to use static addresses
+
+***TODO***
+
+Previously I've used static IP addresses for each node.  This has proved to be somewhat annoying as 
+the Raspberry Pi is setup to default to DHCP and also makes use of 
+[resolveconf](http://manpages.ubuntu.com/manpages/zesty/man8/resolvconf.8.html) 
+which generates a resolv.conf file overwritting anything that is entered for a static configuration. 
+
+According to the debian [instructions](https://wiki.debian.org/NetworkConfiguration#The_resolvconf_program)
+and further details eluded to [here](https://wiki.debian.org/NetworkConfiguration#A.2Fetc.2Fnetwork.2Finterfaces)
+the following lines in /etc/network/interfaces is enough to ensure that DNS servers will be set by resolveconf
+
+```
+dns-nameservers 1.2.3.4
+dns-search some.domain.com
+```
+
+I think for a bigger cluster or if I build/rebuild this again I'll just rely on statically-assigned
+DHCP leases and naming as mucking around with all of this is overly complicating matters :)

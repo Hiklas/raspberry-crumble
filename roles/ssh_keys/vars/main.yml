@@ -1,2 +1,2 @@
 ---
-public_key_files: ../../../public_keys/*.pub
+public_key_files: ../../../publickeys/*.pub
