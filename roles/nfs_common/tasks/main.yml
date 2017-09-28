@@ -1,0 +1,34 @@
+---
+- name: Install NFS packages
+  apt:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - nfs-kernel-server
+    - nfs-common
+    - portmap
+    - autofs
+
+- name: Make the /data directory
+  file:
+    path: /data
+    mode: 0777
+    state: directory
+
+- name: Make the /net directory
+  file:
+    path: /net
+    mode: 0777
+    state: directory
+
+- name: Make the /etc/auto.master.d directory
+  file:
+    path: /etc/auto.master.d
+    mode: 0744
+    state: directory
+
+- name: Copy net autofs to config
+  copy:
+    src: net.autofs
+    dest: /etc/auto.master.d/net.autofs
+    mode: 0744

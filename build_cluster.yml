@@ -7,54 +7,7 @@
   tags: common
 
   tasks:
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-        upgrade: yes
 
-    - name: Install NFS packages
-      apt:
-        state: present
-        name: "{{ item }}"
-      with_items:
-        - nfs-kernel-server
-        - nfs-common
-        - portmap
-        - autofs
-
-    - name: Install MPI packages
-      apt:
-        state: present
-        name: "{{ item }}"
-      with_items:
-        - python-mpi4py
-        - python-mpi4py-doc
-        - mpich
-        - mpich-doc
-
-    - name: Make the /data directory
-      file:
-        path: /data
-        mode: 0777
-        state: directory
-
-    - name: Make the /net directory
-      file:
-        path: /net
-        mode: 0777
-        state: directory
-
-    - name: Make the /etc/auto.master.d directory
-      file:
-        path: /etc/auto.master.d
-        mode: 0744
-        state: directory
-
-    - name: Copy net autofs to config
-      copy:
-        src: etc-files/auto.master.d/net.autofs
-        dest: /etc/auto.master.d/net.autofs
-        mode: 0744
 
     - name: Copy net autofs to config
       copy:
