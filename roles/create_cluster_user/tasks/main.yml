@@ -1,0 +1,22 @@
+---
+- name: Create cluster group
+  group:
+    name: cluster
+    gid: 2001
+    state: present
+
+- name: Create cluster user
+  user:
+    name: cluster
+    uid: 2001
+    group: cluster
+    comment: "Cluster User"
+    generate_ssh_key: "{{ generate_master_key }}"
+    ssh_passphrase: "{{ master_key_passphrase }}"
+    home: /home/cluster
+    createhome: yes
+    state: present
+    shell: /bin/bash
+
+
+

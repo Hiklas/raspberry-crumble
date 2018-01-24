@@ -6,83 +6,31 @@
   become: True
   tags: common
 
-  tasks:
+  roles:
+    - mpi_common
+    - nfs_common
 
 
-    - name: Copy net autofs to config
-      copy:
-        src: etc-files/auto.master.d/net.autofs
-        dest: /etc/auto.master.d/net.autofs
-        mode: 0744
-
-    - name: Copy exports file for non-master nodes
-      copy:
-        src: etc-files/exports-cluster
-        dest: /etc/exports
-        mode: 0744
-      when: "'master' not in group_names"
-
-    - name: Create cluster group
-      group:
-        name: cluster
-        gid: 2001
-        state: present
-
-    - name: Create cluster user
-      user:
-        name: cluster
-        uid: 2001
-        group: cluster
-        comment: "Cluster User"
-        generate_ssh_key: yes
-        home: /home/cluster
-        createhome: yes
-        state: present
-        shell: /bin/bash
-
-- name: Master node setup
+- name: Master setup
   hosts: master
   user: pi
   become: True
   tags: master
 
-  tasks:
-    - name: Copy master vol.autofs to config
-      copy:
-        src: etc-files/auto.master.d/vol.autofs-master
-        dest: /etc/auto.master.d/vol.autofs
-        mode: 0744
+  roles:
+    - { role: create_cluster_user, generate_master_key: "yes" }
+    - nfs_master
 
-    - name: Copy master auto.vol to config
-      copy:
-        src: etc-files/auto.vol-master
-        dest: /etc/auto.vol
-        mode: 0744
-
-    - name: Copy master exports file
-      copy:
-        src: etc-files/exports-master
-        dest: /etc/exports
-        mode: 0744
-
-    -
-
-
-
-- name: FPGA node setup
-  hosts: fpga
+- name: Slave
+  hosts: slavenodes
+  gather_facts: True
   user: pi
   become: True
-  tags: fpga
+  tags: slave
+
+  roles:
+    - nfs_slaves
 
 
-
-
-
-- name: Start processes
-  hosts: allnodes
-  user: pi
-  become: True
-  tags: startup
 
 
