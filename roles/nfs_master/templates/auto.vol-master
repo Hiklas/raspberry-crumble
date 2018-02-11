@@ -1,3 +1,6 @@
-sdcard  -fstype=auto  UUID=db64d741-e970-46f6-96a4-18ff15a304b2
-hdrive  -fstype=auto  UUID=ba9fc3dd-4d4f-44ff-8803-4f0b07dd94a4
+carda -fstype=auto  UUID=82ee655d-d42f-4581-a39d-c89d0bc899e5
+cardb -fstype=auto  UUID=92549f19-3096-4223-b7b9-e825fc91dc87
+cardc -fstype=auto  UUID=27f47eda-e320-469f-b87f-ef4331654b32
+cardd -fstype=auto  UUID=23583005-6696-47f0-8a74-200879d10423
+
 

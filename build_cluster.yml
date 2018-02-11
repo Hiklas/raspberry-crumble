@@ -7,6 +7,7 @@
   tags: common
 
   roles:
+    - aptcache
     - mpi_common
     - nfs_common
 

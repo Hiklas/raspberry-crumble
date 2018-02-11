@@ -1,3 +1,7 @@
-/data    192.168.42.0/24(rw,sync)
-/sdcard  192.168.42.0/24(rw,sync)
+/data  192.168.42.0/24(rw,sync)
+
+/vol/carda  192.168.42.0/24(rw,sync)
+/vol/cardb  192.168.42.0/24(rw,sync)
+/vol/cardc  192.168.42.0/24(rw,sync)
+/vol/cardd  192.168.42.0/24(rw,sync)
 
