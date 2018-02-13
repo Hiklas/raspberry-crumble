@@ -1,0 +1,8 @@
+---
+cluster_group: cluster
+cluster_user: cluster
+cluster_gid: 2001
+cluster_uid: 2001
+cluster_home: /home/cluster
+
+fetched_keys: ../../../fetchedkeys

@@ -30,6 +30,8 @@
   tags: slave
 
   roles:
+    - { role: create_cluster_user, generate_master_key: "no" }
+    - { role: ssh_keys, ssh_user: cluster, public_key_directory: fetchedkeys }
     - nfs_slaves
 
 

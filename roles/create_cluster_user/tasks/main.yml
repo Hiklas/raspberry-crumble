@@ -1,22 +1,33 @@
 ---
 - name: Create cluster group
   group:
-    name: cluster
-    gid: 2001
+    name: "{{ cluster_group }}"
+    gid: "{{ cluster_gid }}"
     state: present
 
 - name: Create cluster user
   user:
-    name: cluster
-    uid: 2001
-    group: cluster
+    name: "{{ cluster_user }}"
+    uid: "{{ cluster_uid }}"
+    group: "{{ cluster_group }}"
     comment: "Cluster User"
     generate_ssh_key: "{{ generate_master_key }}"
     ssh_passphrase: "{{ master_key_passphrase }}"
-    home: /home/cluster
+    home: "{{ cluster_home }}"
     createhome: yes
     state: present
     shell: /bin/bash
+
+- name: Fetch master key and store locally
+  fetch:
+   src: "{{ cluster_group }}/.ssh/id_rsa.pub"
+   dest: "{{ fetched_keys }}"
+   flat: yes
+  when: generate_master_key = yes
+
+
+
+
 
 
 

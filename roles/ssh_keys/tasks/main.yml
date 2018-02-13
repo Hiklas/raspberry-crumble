@@ -5,4 +5,4 @@
     state: present
     key: "{{ lookup( 'file', item ) }}"
   with_fileglob:
-        - "{{ public_key_files }}"
+        - "{{ public_key_base }}{{ public_key_directory }}{{ public_key_files }}"
