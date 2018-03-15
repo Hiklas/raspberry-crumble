@@ -21,6 +21,7 @@
   roles:
     - { role: create_cluster_user, generate_master_key: "yes" }
     - nfs_master
+    - mpi_config
 
 - name: Slave
   hosts: slavenodes

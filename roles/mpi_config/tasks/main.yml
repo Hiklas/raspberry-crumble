@@ -1,0 +1,7 @@
+---
+- name: Create host_file
+  become: yes
+  become_user: cluster
+  template:
+    src: hostfile.j2
+    dest: host_file
