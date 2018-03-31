@@ -1,5 +1,4 @@
 ---
-
 - name: Calculate encrypted password
   raw: 'mkpasswd --method=sha-512 "{{ user_password }}"'
   register: crypt_password_result
