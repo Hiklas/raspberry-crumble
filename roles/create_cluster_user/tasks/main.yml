@@ -20,7 +20,7 @@
 
 - name: Fetch master key and store locally
   fetch:
-   src: "{{ cluster_group }}/.ssh/id_rsa.pub"
+   src: "{{ cluster_home }}/.ssh/id_rsa.pub"
    dest: "{{ fetched_keys }}"
    flat: yes
   when: "generate_master_key == 'yes'"

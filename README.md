@@ -90,6 +90,16 @@ To just run part of the build use the tags, for example
 ansible-playbook -i inventory/hosts -t master --ask-become-pass build_cluster.yml
 ```
 
+### Ad hoc commands
+
+Shutting down all the machines can be done using the following
+
+```
+ansible -u pi --become --ask-become-pass allnodes -i inventory/hosts -a "shutdown -h now"
+```
+
+It drops the connection immediately
+
 
 ## Documentation
 

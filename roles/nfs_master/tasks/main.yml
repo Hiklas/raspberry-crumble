@@ -1,4 +1,10 @@
 ---
+- name: Make the /vol directory
+  file:
+    path: /vol
+    mode: 0777
+    state: directory
+
 - name: Copy master vol.autofs to config
   copy:
     src: vol.autofs-master
