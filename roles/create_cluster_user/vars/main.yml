@@ -6,3 +6,4 @@ cluster_uid: 2001
 cluster_home: /home/cluster
 
 fetched_keys: ../../../fetchedkeys
+master_key_passphrase: Default passphrase

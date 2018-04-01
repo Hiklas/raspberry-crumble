@@ -20,11 +20,12 @@
 
   roles:
     - { role: create_cluster_user, generate_master_key: "yes" }
+    - { role: ssh_keys, ssh_user: cluster, public_key_directory: publickeys }
     - nfs_master
     - mpi_config
 
 - name: Slave
-  hosts: slavenodes
+  hosts: slaves
   gather_facts: True
   user: pi
   become: True
@@ -32,6 +33,7 @@
 
   roles:
     - { role: create_cluster_user, generate_master_key: "no" }
+    - { role: ssh_keys, ssh_user: cluster, public_key_directory: publickeys }
     - { role: ssh_keys, ssh_user: cluster, public_key_directory: fetchedkeys }
     - nfs_slaves
 

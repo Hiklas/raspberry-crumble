@@ -1,4 +1,11 @@
-[allnodes]
+[allnodes:children]
+master
+slaves
+
+[master]
+arthur
+
+[slaves]
 arthur
 dieter
 heimlich
@@ -6,9 +13,6 @@ horst
 riding
 hansel
 gretal
-
-[master]
-arthur
 
 
 [fpga]

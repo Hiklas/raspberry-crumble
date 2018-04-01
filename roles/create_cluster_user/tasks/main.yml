@@ -12,7 +12,7 @@
     group: "{{ cluster_group }}"
     comment: "Cluster User"
     generate_ssh_key: "{{ generate_master_key }}"
-    ssh_passphrase: "{{ master_key_passphrase }}"
+    ssh_key_passphrase: "{{ master_key_passphrase }}"
     home: "{{ cluster_home }}"
     createhome: yes
     state: present
@@ -23,7 +23,7 @@
    src: "{{ cluster_group }}/.ssh/id_rsa.pub"
    dest: "{{ fetched_keys }}"
    flat: yes
-  when: generate_master_key = yes
+  when: "generate_master_key == 'yes'"
 
 
 

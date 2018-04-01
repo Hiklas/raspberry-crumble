@@ -1,6 +1,6 @@
 ---
 - name: Copy exports file for non-master nodes
   copy:
-    src: etc-files/exports-cluster
+    src: exports-cluster
     dest: /etc/exports
     mode: 0744

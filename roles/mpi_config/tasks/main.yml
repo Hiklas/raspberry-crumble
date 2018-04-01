@@ -4,4 +4,4 @@
   become_user: cluster
   template:
     src: hostfile.j2
-    dest: host_file
+    dest: /home/cluster/hostfile
