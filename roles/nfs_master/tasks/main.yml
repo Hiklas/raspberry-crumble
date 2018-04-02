@@ -9,16 +9,16 @@
   copy:
     src: vol.autofs-master
     dest: /etc/auto.master.d/vol.autofs
-    mode: 0744
+    mode: 0644
 
 - name: Copy master auto.vol to config
   copy:
     src: auto.vol-master
     dest: /etc/auto.vol
-    mode: 0744
+    mode: 0644
 
 - name: Copy master exports file
   copy:
     src: exports-master
     dest: /etc/exports
-    mode: 0744
+    mode: 0644

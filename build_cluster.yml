@@ -24,7 +24,7 @@
     - nfs_master
     - mpi_config
 
-- name: Slave
+- name: Slave setup
   hosts: slaves
   gather_facts: True
   user: pi
@@ -37,6 +37,14 @@
     - { role: ssh_keys, ssh_user: cluster, public_key_directory: fetchedkeys }
     - nfs_slaves
 
+- name: All nodes start service
+  hosts: allnodes
+  user: pi
+  become: True
+  tags: common
+
+  roles:
+    - nfs_common_startup
 
 
 

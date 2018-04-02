@@ -1,0 +1,19 @@
+---
+- name: Enable services for NFS and automounts
+  systemd:
+    enabled: yes
+    daemon_reload: yes
+    name: "{{ item }}"
+  with_items:
+    - nfs-kernel-server
+    - rpcbind
+    - autofs
+
+- name: Restart services for NFS and automounts
+  systemd:
+    state: restarted
+    name: "{{ item }}"
+  with_items:
+    - nfs-kernel-server
+    - rpcbind
+    - autofs

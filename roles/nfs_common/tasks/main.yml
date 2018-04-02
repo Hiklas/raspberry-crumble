@@ -6,7 +6,7 @@
   with_items:
     - nfs-kernel-server
     - nfs-common
-    - portmap
+    - rpcbind
     - autofs
 
 - name: Make the /data directory
@@ -24,18 +24,24 @@
 - name: Make the /etc/auto.master.d directory
   file:
     path: /etc/auto.master.d
-    mode: 0744
+    mode: 0755
     state: directory
 
 - name: Copy net autofs to config
   copy:
     src: net.autofs
     dest: /etc/auto.master.d/net.autofs
-    mode: 0744
+    mode: 0644
 
 - name: Copy exports file for non-master nodes
   copy:
     src: exports-cluster
     dest: /etc/exports
-    mode: 0744
+    mode: 0644
   when: "'master' not in group_names"
+
+- name: Remove host entry from /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '^127\.0\.1\.1'
+    state: absent
