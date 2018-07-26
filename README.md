@@ -92,6 +92,8 @@ ansible-playbook -i inventory/hosts -t master --ask-become-pass build_cluster.ym
 
 ### Ad hoc commands
 
+#### Shutting down all machines
+
 Shutting down all the machines can be done using the following
 
 ```
@@ -99,6 +101,19 @@ ansible -u pi --become --ask-become-pass allnodes -i inventory/hosts -a "shutdow
 ```
 
 It drops the connection immediately
+
+
+#### Stopping the Wifi
+
+Since most (if not all of the machines now) in my cluster are RPi 3 there is a possibility that the WiFi on each is
+pinging out traffic to look for access points (or maybe just using power anyway sitting there idle).  So this command 
+was used to shut down the wlan0 interface until such time as I got a chance to integrate and test a new role in the 
+ansible config that permanently shuts off the wifi devices (this is merged in as part of the update that includes this 
+README change but not tested yet)
+
+```
+ansible -u pi --become --ask-become-pass allnodes -i inventory/hosts -a "ifconfig wlan0 down"
+``` 
 
 
 ## Documentation

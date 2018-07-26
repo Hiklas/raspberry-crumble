@@ -1,0 +1,10 @@
+---
+- name: Disable wifi
+  lineinfile:
+    state: present
+    regexp: "^dtoverlay=pi3-disable-wifi"
+    line: "dtoverlay=pi3-disable-wifi"
+    insertafter: "EOF"
+    backup: yes
+
+

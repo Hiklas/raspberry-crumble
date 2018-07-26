@@ -20,6 +20,7 @@
   roles:
 
     - raspconfig
+    - disable_wifi
     - { role: ssh_keys, ssh_user: root }
     - { role: ssh_keys, ssh_user: pi }
     - { role: set_pi_password, user_password: "{{ pi_password }}", tags: reset_password }

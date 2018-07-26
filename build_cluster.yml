@@ -8,6 +8,7 @@
 
   roles:
     - aptcache
+    - common_packages
     - mpi_common
     - nfs_common
 
