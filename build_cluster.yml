@@ -9,7 +9,7 @@
   roles:
     - aptcache
     - common_packages
-    - mpi_common
+    - mpi_packages
     - nfs_common
 
 
