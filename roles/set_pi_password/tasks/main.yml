@@ -1,4 +1,10 @@
 ---
+- name: Need to install mkpasswd first
+  apt:
+    name: whois
+    state: present
+    update_cache: yes
+    
 - name: Calculate encrypted password
   raw: 'mkpasswd --method=sha-512 "{{ user_password }}"'
   register: crypt_password_result

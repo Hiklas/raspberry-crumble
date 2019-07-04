@@ -1,10 +1,12 @@
 ---
 - name: Disable wifi
   lineinfile:
+    path: /boot/config.txt
     state: present
     regexp: "^dtoverlay=pi3-disable-wifi"
     line: "dtoverlay=pi3-disable-wifi"
     insertafter: "EOF"
-    backup: yes
+    # It's a FAT filesystem and the backup filename doesn't work
+    backup: no
 
 
