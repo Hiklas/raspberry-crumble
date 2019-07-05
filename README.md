@@ -6,6 +6,10 @@ Configuration and code for test Raspberry Pi Cluster.
 
 I've seen lots of examples of people building test 'super computers' out of Raspberry Pi's and I wanted to have a go myself.  I got a free [Meraki](https://meraki.cisco.com) router after watching one of their webinars and thought this would make an excellent excuse, I mean, solution for building and powering the cluster.  The main reason being this particular router, [MS220-8P](https://meraki.cisco.com/products/switches/ms220-8), has PoE on all ports making it easy to hook up each Pi with a splitter.
 
+NOTE: I'm no longer using the Meraki router for the cluster for various reasons.  I'm now simply using a 
+managed switch and direct connection to a USB power supply.  One of the issues I had was that the PoE splitters
+took up quite a bit of room and running usb cables proved to be slightly tidier.
+
 
 ## Hardware
 
@@ -181,3 +185,9 @@ Found a [post about this](https://stackoverflow.com/questions/34243229/in-ansibl
 The scripts are now using a method in the following link to generate the encrypted password, specifically
 the [mkpasswd command mentioned here](http://docs.ansible.com/ansible/latest/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module) 
                       
+					  
+## References
+
+### Ansible 
+
+* [lineinfile module](https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html)
